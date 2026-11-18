@@ -1,0 +1,86 @@
+@import "./tokens.css";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--cinza-1000);
+  color: var(--cinza-0);
+  font-family: var(--familia-principal);
+  font-weight: var(--peso-semibold);
+  font-size: var(--tamanho-3);
+  line-height: 1.25;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+img {
+  display: block;
+}
+
+:focus-visible {
+  outline: var(--foco);
+  outline-offset: 2px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Contêiner de página: largura total no mobile, centralizado com largura máxima no desktop. */
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.page__content {
+  width: 100%;
+  max-width: var(--conteudo-max);
+  margin: 0 auto;
+  padding: var(--espaco-16) var(--margem-tela) var(--espaco-32);
+  flex: 1;
+}
+
+@media (max-width: 380px) {
+  :root {
+    --margem-tela: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

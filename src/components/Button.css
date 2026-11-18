@@ -1,0 +1,72 @@
+/* Botões baseados em app/botão/grande-principal e app/botão/médio (Embrace Power). */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espaco-8);
+  padding: 0 var(--espaco-12);
+  border: 1px solid var(--cinza-0);
+  border-radius: var(--raio-botao);
+  background: transparent;
+  color: var(--cinza-0);
+  font-weight: var(--peso-semibold);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--transicao), color var(--transicao), border-color var(--transicao), opacity var(--transicao);
+}
+
+.btn--full {
+  width: 100%;
+}
+
+.btn--large {
+  height: var(--altura-botao-grande);
+  font-size: var(--tamanho-m);
+  padding: 0 var(--espaco-24);
+}
+
+.btn--medium {
+  height: var(--altura-botao-medio);
+  font-size: var(--tamanho-3);
+}
+
+.btn--outline:hover:not(:disabled) {
+  background: var(--aba-inativa);
+}
+
+.btn--outline:active:not(:disabled) {
+  background: var(--aba-ativa);
+}
+
+.btn--primary {
+  background: var(--destaque-principal);
+  border-color: var(--destaque-principal);
+  color: var(--cinza-1000);
+}
+
+.btn--primary:hover:not(:disabled) {
+  filter: brightness(1.08);
+}
+
+.btn--primary:active:not(:disabled) {
+  filter: brightness(0.92);
+}
+
+/* Estado desabilitado do Figma: contorno e texto em cinza/200. */
+.btn:disabled {
+  background: transparent;
+  border-color: var(--cinza-200);
+  color: var(--cinza-200);
+  cursor: not-allowed;
+  filter: none;
+}
+
+.btn__icon {
+  display: inline-grid;
+  place-items: center;
+}
+
+.btn__label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

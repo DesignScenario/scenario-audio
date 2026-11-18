@@ -1,0 +1,129 @@
+.slider {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.slider__input {
+  --track-bg: linear-gradient(
+    to right,
+    var(--cinza-250) 0 var(--fill-start),
+    var(--destaque-principal) var(--fill-start) var(--fill-end),
+    var(--cinza-250) var(--fill-end) 100%
+  );
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  height: var(--slider-area-toque);
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+  touch-action: pan-y;
+}
+
+.slider__input:focus-visible {
+  outline: var(--foco);
+  outline-offset: 2px;
+  border-radius: var(--raio-botao);
+}
+
+/* Trilho */
+.slider__input::-webkit-slider-runnable-track {
+  height: var(--slider-trilho);
+  border-radius: 1.5px;
+  background: var(--track-bg);
+}
+
+.slider__input::-moz-range-track {
+  height: var(--slider-trilho);
+  border-radius: 1.5px;
+  background: var(--track-bg);
+}
+
+/* Thumb */
+.slider__input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: var(--slider-thumb);
+  height: var(--slider-thumb);
+  margin-top: calc((var(--slider-trilho) - var(--slider-thumb)) / 2);
+  border: 0;
+  border-radius: 50%;
+  background: var(--destaque-principal);
+  transition: transform var(--transicao), box-shadow var(--transicao);
+}
+
+.slider__input::-moz-range-thumb {
+  width: var(--slider-thumb);
+  height: var(--slider-thumb);
+  border: 0;
+  border-radius: 50%;
+  background: var(--destaque-principal);
+  transition: transform var(--transicao), box-shadow var(--transicao);
+}
+
+.slider__input:hover:not(:disabled)::-webkit-slider-thumb {
+  transform: scale(1.25);
+  box-shadow: 0 0 0 6px rgb(255 204 51 / 0.16);
+}
+
+.slider__input:hover:not(:disabled)::-moz-range-thumb {
+  transform: scale(1.25);
+  box-shadow: 0 0 0 6px rgb(255 204 51 / 0.16);
+}
+
+.slider__input:active:not(:disabled)::-webkit-slider-thumb {
+  transform: scale(1.4);
+  box-shadow: 0 0 0 8px rgb(255 204 51 / 0.22);
+}
+
+.slider__input:active:not(:disabled)::-moz-range-thumb {
+  transform: scale(1.4);
+  box-shadow: 0 0 0 8px rgb(255 204 51 / 0.22);
+}
+
+/* Em telas de toque o thumb cresce para facilitar o arraste. [adaptado] */
+@media (pointer: coarse) {
+  .slider__input::-webkit-slider-thumb {
+    width: 20px;
+    height: 20px;
+    margin-top: calc((var(--slider-trilho) - 20px) / 2);
+  }
+  .slider__input::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* Marca do ponto neutro (equalização/balanço). */
+.slider__center-mark {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 1px;
+  height: 11px;
+  transform: translate(-50%, -50%);
+  background: var(--cinza-0);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Desabilitado: trilho e thumb em cinza, sem preenchimento amarelo. */
+.slider--disabled .slider__input {
+  --track-bg: linear-gradient(
+    to right,
+    var(--cinza-300) 0 var(--fill-start),
+    var(--cinza-250) var(--fill-start) var(--fill-end),
+    var(--cinza-300) var(--fill-end) 100%
+  );
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.slider--disabled .slider__input::-webkit-slider-thumb {
+  background: var(--cinza-200);
+}
+
+.slider--disabled .slider__input::-moz-range-thumb {
+  background: var(--cinza-200);
+}

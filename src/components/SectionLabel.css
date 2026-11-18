@@ -1,0 +1,16 @@
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-12);
+  min-height: var(--altura-subtitulo);
+  border-bottom: 1px solid var(--cinza-300);
+}
+
+.section-label__text {
+  flex: 1;
+  font-size: var(--tamanho-5xs);
+  font-weight: var(--peso-bold);
+  color: var(--cinza-50);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}

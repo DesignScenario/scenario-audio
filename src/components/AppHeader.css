@@ -1,0 +1,77 @@
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--cinza-1000);
+  padding-top: var(--espaco-8);
+}
+
+.app-header__bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--altura-barra-titulo);
+  max-width: var(--conteudo-max);
+  margin: 0 auto;
+  padding: var(--espaco-4) 52px; /* [figma-raw] títulos com 52px de recuo lateral */
+}
+
+.app-header__titles {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  text-align: center;
+  min-width: 0;
+}
+
+.app-header__title {
+  font-size: var(--tamanho-titulo);
+  font-weight: var(--peso-semibold);
+  color: var(--cinza-0);
+  line-height: normal;
+}
+
+.app-header__subtitle {
+  font-size: var(--tamanho-m);
+  color: var(--cinza-200);
+  text-transform: uppercase;
+  line-height: normal;
+  overflow-wrap: anywhere;
+}
+
+.app-header__icon-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--raio-botao);
+  background: transparent;
+  cursor: pointer;
+  transition: background-color var(--transicao);
+}
+
+.app-header__back {
+  left: 4px; /* ícone de 28px fica a 12px da borda, como no Figma */
+}
+
+.app-header__icon-btn:hover {
+  background: var(--aba-inativa);
+}
+
+.app-header__icon-btn:active {
+  background: var(--aba-ativa);
+}
+
+.app-header__trailing {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+}

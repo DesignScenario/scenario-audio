@@ -1,0 +1,162 @@
+.discovery {
+  display: grid;
+  gap: var(--espaco-32);
+  align-content: start;
+}
+
+.discovery__section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-12);
+  min-width: 0;
+}
+
+.discovery__hint {
+  font-size: var(--tamanho-3);
+  color: var(--texto-secundario);
+  padding: var(--espaco-8) 0;
+}
+
+.discovery__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.discovery__list--added {
+  display: grid;
+  gap: var(--espaco-8);
+}
+
+.discovery__list--found > li + li {
+  border-top: 1px solid var(--borda-card);
+}
+
+/* Estado inicial */
+.discovery__start,
+.discovery__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espaco-12);
+  padding: var(--espaco-32) var(--espaco-8);
+  text-align: center;
+}
+
+.discovery__start .btn,
+.discovery__empty .btn {
+  width: 100%;
+  max-width: 331px; /* [figma-raw] largura do botão grande nas telas de 393px */
+  margin-top: var(--espaco-12);
+}
+
+.discovery__start-icon {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 1px solid var(--aba-ativa);
+  margin-bottom: var(--espaco-4);
+}
+
+.discovery__start-icon img {
+  width: 24px;
+  height: 24px;
+}
+
+.discovery__start-title {
+  font-size: var(--tamanho-titulo);
+  color: var(--cinza-0);
+}
+
+.discovery__start-text {
+  max-width: 34ch;
+  font-size: var(--tamanho-3);
+  color: var(--texto-secundario);
+}
+
+.discovery__tips {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: var(--espaco-4);
+  font-size: var(--tamanho-3);
+  color: var(--texto-secundario);
+}
+
+/* Placeholder de carregamento enquanto nada foi encontrado. */
+.discovery__skeleton {
+  display: grid;
+  gap: var(--espaco-16);
+  padding: var(--espaco-16) 0;
+}
+
+.discovery__skeleton span {
+  display: block;
+  height: 64px;
+  border-radius: var(--raio-imagem);
+  background: linear-gradient(90deg, var(--superficie-card) 0%, var(--aba-inativa) 50%, var(--superficie-card) 100%);
+  background-size: 200% 100%;
+  animation: discovery-shimmer 1.2s ease-in-out infinite;
+}
+
+@keyframes discovery-shimmer {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: -100% 0;
+  }
+}
+
+/* Opções de demonstração */
+.discovery__demo {
+  border-top: 1px solid var(--borda-card);
+  padding-top: var(--espaco-12);
+  font-size: var(--tamanho-2xs);
+  color: var(--cinza-250);
+}
+
+.discovery__demo summary {
+  cursor: pointer;
+  width: fit-content;
+  padding: var(--espaco-4) 0;
+}
+
+.discovery__demo-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-12);
+  max-width: 360px;
+  padding: var(--espaco-12) 0 var(--espaco-4);
+  color: var(--cinza-0);
+}
+
+.discovery__demo-note {
+  color: var(--cinza-250);
+}
+
+/* Desktop: duas colunas — equipamentos encontrados à esquerda, adicionados à direita. */
+@media (min-width: 960px) {
+  .discovery {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: 56px;
+  }
+
+  .discovery__network {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .discovery__mine {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .discovery__demo {
+    grid-column: 1 / -1;
+  }
+}

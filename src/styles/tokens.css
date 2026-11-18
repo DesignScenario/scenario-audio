@@ -1,0 +1,74 @@
+/*
+ * Tokens do Scenario Audio — derivados do Design System do Embrace Power (Figma).
+ * Arquivo Figma: hjBAF72Al9BTYAKXzFZfdJ (páginas "EMBRACE POWER" e "E-APP - DESIGN SYSTEM").
+ *
+ * Legenda de origem (ver docs/design-system.md):
+ *   [figma]      valor e nome lidos de uma variável do Figma
+ *   [figma-raw]  valor lido de um componente/tela, sem variável nomeada
+ *   [adaptado]   derivado de um valor do Figma para atender o Scenario Audio
+ *   [provisório] criado para o protótipo; precisa de validação do design
+ */
+:root {
+  /* ---------- Cores ---------- */
+  --cinza-0: #ffffff;      /* [figma] cinza/0 — texto principal, contorno de botão */
+  --cinza-50: #b7b7b7;     /* [figma] cinza/50 — rótulo de subtítulo de lista */
+  --cinza-200: #a5a5a5;    /* [figma] cinza/200 — subtítulo da barra de título, botão desabilitado */
+  --cinza-250: #999999;    /* [figma] cinza/250 — trilho do slider, texto de aba inativa */
+  --cinza-300: #7d7d7d;    /* [figma] cinza/300 — linha divisória do subtítulo */
+  --cinza-1000: #000000;   /* [figma] cinza/1000 — fundo das telas */
+  --texto-secundario: #a1a1a1; /* [figma-raw] MAC/Firmware/IP do item de dispositivo */
+  --destaque-principal: #ffcc33; /* [figma] destaque/principal — preenchimento de slider, botão ativo, toggle ligado */
+  --aba-ativa: #404040;    /* [figma] semântica/keypads/primária/cinza — aba selecionada */
+  --aba-inativa: #262626;  /* [figma] semântica/keypads/secundária/cinza — aba não selecionada */
+  --toggle-off: #353535;   /* [figma-raw] fundo do app/toggle desligado */
+
+  --superficie-card: #141414;   /* [provisório] fundo dos cards de zona — o Figma não define superfície de card no tema escuro */
+  --borda-card: #262626;        /* [adaptado] reaproveita semântica/keypads/secundária/cinza como borda sutil */
+  --erro: #ff6b6b;              /* [provisório] não usado em fluxos principais */
+
+  /* ---------- Tipografia ---------- */
+  --familia-principal: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif; /* [figma-raw] telas do Embrace Power usam Figtree */
+  --peso-semibold: 600;    /* [figma] peso/semibold */
+  --peso-bold: 700;        /* [figma] peso/bold */
+  --tamanho-5xs: 10px;     /* [figma] tamanho/5xs — rótulo do subtítulo de lista */
+  --tamanho-2xs: 13px;     /* [figma] tamanho/2xs — texto de aba inativa */
+  --tamanho-3: 14px;       /* [figma] tamanho/Size 3 — texto secundário, botão médio */
+  --tamanho-s: 15px;       /* [figma] tamanho/s — texto de aba ativa */
+  --tamanho-m: 16px;       /* [figma] tamanho/m — nome do dispositivo, botão grande, subtítulo do topo */
+  --tamanho-titulo: 22px;  /* [figma-raw] título da barra de título */
+  --tamanho-4xl: 26px;     /* [figma] tamanho/4xl — nome em cards de ambiente */
+
+  /* ---------- Espaçamentos e dimensões ---------- */
+  --margem-tela: 31px;     /* [figma-raw] margem lateral das telas de 393px */
+  --espaco-4: 4px;         /* [figma-raw] gap entre linhas de texto do item de dispositivo */
+  --espaco-8: 8px;
+  --espaco-12: 12px;       /* [figma-raw] gap entre infos e botão no item de dispositivo */
+  --espaco-16: 16px;       /* [figma-raw] gap imagem↔texto e padding vertical do item */
+  --espaco-24: 24px;
+  --espaco-32: 32px;
+
+  --altura-barra-titulo: 56px;  /* [figma-raw] app/barra/barra-de-título */
+  --icone-voltar: 28px;         /* [figma-raw] app/ícone/voltar-28px */
+  --altura-subtitulo: 25px;     /* [figma-raw] app/subtítulo */
+  --altura-botao-medio: 32px;   /* [figma-raw] app/botão/médio */
+  --altura-botao-grande: 50px;  /* [figma-raw] app/botão/grande-principal */
+  --altura-aba: 40px;           /* [figma-raw] app/botão/aba-keypad */
+  --thumb-dispositivo: 64px;    /* [figma-raw] imagem no item de dispositivo encontrado */
+
+  --raio-botao: 4px;            /* [figma-raw] botões e abas */
+  --raio-imagem: 6px;           /* [figma-raw] imagem de dispositivo */
+  --raio-card: 6px;             /* [adaptado] cards de zona seguem o raio da imagem de dispositivo */
+
+  /* Slider (app/slider/padrão) */
+  --slider-trilho: 3px;         /* [figma-raw] */
+  --slider-thumb: 13px;         /* [figma-raw] */
+  --slider-area-toque: 32px;    /* [adaptado] área de interação maior que o desenho para toque/mouse */
+
+  /* Toggle (app/toggle) */
+  --toggle-largura: 36px;       /* [figma-raw] */
+  --toggle-altura: 22px;        /* [figma-raw] */
+
+  --conteudo-max: 1120px;       /* [provisório] largura máxima do conteúdo no desktop */
+  --transicao: 160ms ease;      /* [provisório] */
+  --foco: 2px solid var(--destaque-principal); /* [adaptado] anel de foco com a cor de destaque */
+}

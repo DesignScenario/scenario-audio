@@ -1,0 +1,93 @@
+.zone-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-8);
+  padding: var(--espaco-16) var(--espaco-16) var(--espaco-12);
+  border: 1px solid var(--borda-card);
+  border-radius: var(--raio-card);
+  background: var(--superficie-card);
+  transition: opacity var(--transicao), border-color var(--transicao);
+}
+
+.zone-card:focus-within {
+  border-color: var(--aba-ativa);
+}
+
+.zone-card__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--espaco-12);
+}
+
+.zone-card__name {
+  font-size: var(--tamanho-m);
+  font-weight: var(--peso-semibold);
+  color: var(--cinza-0);
+}
+
+.zone-card__value {
+  font-size: var(--tamanho-titulo);
+  font-weight: var(--peso-semibold);
+  font-variant-numeric: tabular-nums;
+  color: var(--cinza-0);
+  min-width: 3.2ch;
+  text-align: right;
+}
+
+.zone-card__unit {
+  margin-left: 1px;
+  font-size: var(--tamanho-3);
+  color: var(--texto-secundario);
+}
+
+.zone-card__volume {
+  display: flex;
+  align-items: center;
+  gap: 11px; /* [figma-raw] app/controle/volume */
+}
+
+.zone-card__speaker {
+  flex-shrink: 0;
+  transition: opacity var(--transicao);
+}
+
+.zone-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-12);
+  padding-top: var(--espaco-12);
+  border-top: 1px solid var(--borda-card);
+}
+
+.zone-card__status {
+  font-size: var(--tamanho-2xs);
+  color: var(--texto-secundario);
+}
+
+.zone-card__status--off {
+  color: var(--cinza-0);
+}
+
+.zone-card__hint {
+  margin-top: -2px;
+  font-size: var(--tamanho-2xs);
+  color: var(--cinza-0);
+}
+
+/* Zona desabilitada: conteúdo de volume esmaecido, rodapé continua legível. */
+.zone-card--disabled .zone-card__name,
+.zone-card--disabled .zone-card__value {
+  color: var(--cinza-250);
+}
+
+.zone-card--disabled .zone-card__speaker {
+  opacity: 0.3;
+}
+
+.zone-card--disabled {
+  background: var(--cinza-1000);
+  border-style: dashed;
+  border-color: var(--aba-ativa);
+}
