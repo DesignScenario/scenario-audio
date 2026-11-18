@@ -2,6 +2,8 @@
 
 Protótipo web navegável do app **Scenario Audio** (Scenario Automation), usado para validar layout e experiência de uso na configuração e no controle dos amplificadores multi-room **SMA4** (4 zonas) e **SMA6** (6 zonas). A identidade visual segue o Design System do **Embrace Power**.
 
+**Acesse online:** https://scenario-audio.vercel.app/ (publicado pelo Vercel a cada push no `main`).
+
 > ⚠️ É um **protótipo de interface**. Nada se comunica com equipamentos, rede, Bluetooth, backend ou APIs. Todos os dados são fictícios.
 
 ## Como executar
