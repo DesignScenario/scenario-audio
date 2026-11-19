@@ -1,13 +1,8 @@
+/* Equalização dentro do accordion do card de zona: sem caixas aninhadas, só divisórias. */
 .eq-panel {
   display: flex;
   flex-direction: column;
-  gap: var(--espaco-16);
-  max-width: 640px;
-}
-
-.eq-panel__intro {
-  font-size: var(--tamanho-3);
-  color: var(--texto-secundario);
+  gap: var(--espaco-12);
 }
 
 .eq-panel__list {
@@ -15,19 +10,19 @@
   margin: 0;
   padding: 0;
   display: grid;
-  gap: var(--espaco-8);
+  gap: var(--espaco-12);
 }
 
 .eq-panel__band {
-  padding: var(--espaco-16);
-  border: 1px solid var(--borda-card);
-  border-radius: var(--raio-card);
-  background: var(--superficie-card);
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
 }
 
-/* Balanço é um ajuste de natureza diferente: separado visualmente das bandas. */
+/* Balanço é um ajuste de natureza diferente: separado das bandas por uma divisória. */
 .eq-panel__band--balance {
-  margin-top: var(--espaco-12);
+  padding-top: var(--espaco-12);
+  border-top: 1px solid var(--borda-card);
 }
 
 .eq-panel__row {
@@ -38,12 +33,12 @@
 }
 
 .eq-panel__label {
-  font-size: var(--tamanho-m);
+  font-size: var(--tamanho-3);
   color: var(--cinza-0);
 }
 
 .eq-panel__value {
-  font-size: var(--tamanho-m);
+  font-size: var(--tamanho-3);
   font-variant-numeric: tabular-nums;
   color: var(--destaque-principal);
 }
@@ -66,11 +61,11 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--espaco-12) var(--espaco-16);
+  gap: var(--espaco-8) var(--espaco-12);
 }
 
 .eq-panel__note {
-  flex: 1 1 220px;
+  flex: 1 1 140px;
   font-size: var(--tamanho-2xs);
   color: var(--cinza-250);
 }

@@ -1,90 +1,120 @@
 # Interações — Scenario Audio (protótipo)
 
-Legenda da coluna **Origem**: **B** = definido no briefing · **H** = hipótese adotada no protótipo (ver `decisions.md`).
+Legenda da coluna **Origem**: **B** = definido no briefing · **C** = confirmado pela equipe (19/11/2026) · **H** = hipótese do protótipo (ver `decisions.md`).
 
 ## 1. Navegação
 | Ação | Resposta da interface | Origem |
 |---|---|---|
-| Abrir o app | Tela **Scenario Audio** com as seções *Encontrados na rede* e *Meus equipamentos* | B (seções: H) |
-| Clicar num card em *Meus equipamentos* | Abre a tela de controle do equipamento | B |
-| Clicar em ← (voltar) na tela de controle | Volta para a tela de equipamentos | B |
-| Trocar de tela | A página volta ao topo e o título da aba do navegador muda | H |
+| Abrir o app | Tela **Scenario Audio** com *Meus equipamentos* e *Encontrados na rede* | B (seções: H) |
+| Clicar num card de *Meus equipamentos* | Abre a tela do equipamento na aba **Zona** | B |
+| Alternar abas **Zona** \| **Source** | Troca o conteúdo sem perder valores. Setas ←/→, Home e End movem entre as abas | B (teclado: H) |
+| Clicar na **engrenagem** (topo direito) | Abre **Configurações** do equipamento | B |
+| ← em Configurações | Volta para a tela do equipamento **na mesma aba** em que estava | B (manter a aba: H) |
+| ← na tela do equipamento | Volta para a lista de equipamentos | B |
+| Abrir outro equipamento | Começa na aba Zona | H |
+| Trocar de tela | Rola ao topo e muda o título da aba do navegador | H |
 
-Navegação por estado (`openDeviceId`), sem URL própria. Recarregar a página volta ao início (ver §6).
+Navegação por estado (`openDeviceId`, `deviceView`, `controlTab`), sem URL própria. Recarregar a página reinicia tudo.
 
 ## 2. Descoberta (tela inicial)
 | Estado | O que aparece | Origem |
 |---|---|---|
-| Inicial (antes da busca) | Ícone de busca, título "Encontre seus equipamentos", texto e botão primário **Procurar equipamentos** | B |
-| Buscando | Linha "Procurando equipamentos…" com a lupa animada; placeholder em shimmer até o 1º resultado; os equipamentos aparecem **um a um** (~0,9 s e depois a cada ~0,65 s) | B (revelação progressiva: H, inspirada nas telas de busca Bluetooth do Embrace Power) |
-| Com resultados | "Busca concluída · N equipamentos" + ação **Procurar novamente**; lista de cards | B |
-| Sem resultados | "Nenhum equipamento encontrado", 3 dicas e botão **Procurar novamente** | B |
-| Com adicionados | Cards em *Meus equipamentos* com modelo, MAC e "X de Y zonas ativas"; na lista da rede, o botão vira **Adicionado** (desabilitado) | B |
+| Inicial | Ícone de busca, "Encontre seus equipamentos" e botão primário **Procurar equipamentos** | B |
+| Buscando | "Procurando equipamentos…" com lupa animada; shimmer até o 1º resultado; equipamentos aparecem **um a um** (~0,9 s e depois a cada ~0,65 s) | B (ritmo: H) |
+| Com resultados | "Busca concluída · N equipamentos" + **Procurar novamente**; cards | B |
+| Sem resultados | "Nenhum equipamento encontrado", 3 dicas e **Procurar novamente** (demonstrável em *Opções de demonstração*) | B (opção: H) |
+| Com adicionados | Card em *Meus equipamentos* com modelo, MAC, IP e "X de Y zonas ativas"; botão da rede vira **Adicionado** (desabilitado) | B |
 
-- O contador "ENCONTRADOS NA REDE: N" segue o padrão `app/subtítulo` do Figma.
-- O **estado vazio** é demonstrável em *Opções de demonstração → Simular rede sem equipamentos* (recurso só do protótipo; H).
-- Tempos e lista fictícia: `src/config/audioLimits.ts` (`SCAN_TIMING`) e `src/data/mockDevices.ts`.
+Card de equipamento encontrado: miniatura (placeholder), **modelo**, **MAC**, **IP**, número de zonas e **Adicionar**. Adicionar destaca o card novo por ~2,4 s e anuncia a adição a leitores de tela. O reducer ignora `addDevice` repetido. **B**
 
-### Card de equipamento encontrado
-Miniatura 64 px (placeholder, ver design-system), **modelo**, **MAC**, número de zonas e o botão **Adicionar**.
+## 3. Aba Zona
+- SMA4 = 4 cards, SMA6 = 6 cards (`MODEL_ZONES`). Resumo "ZONAS: N · X ATIVAS · Y FAVORITAS". **B**
+- Grade: 1 coluna < 600 px; 2 colunas até 1023 px; SMA6 em 3 colunas a partir de 1024 px. Abrir o accordion de um card não estica os vizinhos.
 
-### Adicionar e duplicidade
+Ordem dentro do card: **nome + estrela + valor** → **Source** → **volume + mute** → **Configurações avançadas** → **toggle de habilitar**.
+
+### 3.1 Favoritar
 | Ação | Resposta | Origem |
 |---|---|---|
-| Clicar em **Adicionar** | O equipamento entra em *Meus equipamentos* com borda de destaque por ~2,4 s; o botão vira **Adicionado**; leitores de tela anunciam "SMA6 … adicionado" | B (destaque/anúncio: H) |
-| Clicar de novo / procurar novamente | O botão continua **Adicionado** e desabilitado; o reducer ignora `addDevice` de id repetido | B |
+| Clicar na estrela (contorno) | Estrela amarela; a zona vai para o topo | B |
+| Várias favoritas | Ordenadas pela numeração; depois as não favoritas, também pela numeração | B |
+| Clicar na estrela amarela | A zona volta à posição da sua numeração | B |
+| Favoritar zona desabilitada | Permitido (não é controle operacional) | H |
 
-## 3. Tela de controle
-- Cabeçalho: modelo (título) + "MAC …" (subtítulo em caixa alta) + voltar. **B**
-- Abas **Zonas** | **Equalização** (`app/menu/abas`). Zonas abre por padrão. Setas ←/→, Home e End alternam as abas. **H**
+A reordenação só muda a ordem de exibição; o card é o mesmo (`key = zone.id`) e os valores ficam no reducer.
 
-### 3.1 Zonas
+### 3.2 Source
+| Ação | Resposta | Origem |
+|---|---|---|
+| Abrir o select | Lista só as Sources **habilitadas** do equipamento, com os nomes atuais | B |
+| Source atual foi desabilitada | Continua selecionada, aparece como "Nome (desabilitada)", contorno amarelo e aviso "Nome está desabilitada. Selecione outra Source." | B (tratamento: H) |
+| Escolher outra Source | O aviso some; a Source desabilitada deixa de aparecer na lista | B |
+
+### 3.3 Volume e mute
+| Ação | Resposta | Origem |
+|---|---|---|
+| Arrastar / setas / PgUp / PgDn / Home / End | Volume 0–100, valor em % atualizado na hora; cada zona é independente | B |
+| Botão de alto-falante (mute) | Ícone vira `volume=mute`; o valor mostra "Mudo"; o slider **mantém** o volume configurado, esmaecido | B |
+| Desfazer mute | Volta ao volume anterior | B |
+
+### 3.4 Habilitar / desabilitar zona
+| Ação | Resposta | Origem |
+|---|---|---|
+| Desligar "Zona ativa" | Card acinzentado (`#262626`), **0 %**, ícone mudo; Source, slider, mute, EQ e Memorizar **desabilitados**; aviso "Zona mutada: ative a zona…" ligado por `aria-describedby` | C |
+| Religar | Tudo volta como estava: volume, mute, Source, EQ e Memorizar | C |
+| Favoritar / reabilitar com a zona desabilitada | Continuam disponíveis | B |
+
+### 3.5 Configurações avançadas (accordion)
 | Item | Comportamento | Origem |
 |---|---|---|
-| Quantidade | SMA4 = 4 cards, SMA6 = 6 cards, gerados por `MODEL_ZONES` | B |
-| Card | Nome ("Zona N"), valor em % (22 px), slider de volume + ícone de alto-falante, rodapé com toggle | B |
-| Volumes iniciais | 65, 40, 80, 25, 55, 70 % (em ordem) | B (valores: H) |
-| Alterar volume | Arraste, clique ou teclado (setas ±1, PgUp/PgDn, Home/End); o valor e o preenchimento amarelo atualizam na hora | B |
-| Independência | Cada zona tem estado próprio; alterar uma não afeta as outras | B |
-| Resumo | "ZONAS: N · X ATIVAS" acima da grade | H |
+| Accordion | Fechado por padrão; título + chevron (`menu-suspenso-24px`), `aria-expanded` | B (padrão fechado: H) |
+| Grave / Médio / Agudo | −7 a +7 dB, passo 1, início em 0. Exibe "+4 dB", "0 dB", "−3 dB" | C |
+| Balanço | −10 (E) a +10 (D), início em Centro. Exibe "E 2", "Centro", "D 3" | B (faixa: H, demonstrativa) |
+| Restaurar padrão | Zera a EQ **desta zona**; desabilitado quando já está no neutro | H |
+| Memorizar último volume | Switch por zona; só guarda a preferência no protótipo | B (efeito: H) |
 
-### 3.2 Habilitar / desabilitar zona (avançado)
+Sliders bipolares: o preenchimento amarelo vai do centro até o valor. O valor fica amarelo fora do neutro.
+
+## 4. Aba Source
+Lista numerada (1…N) de cards; 1 coluna < 600 px, 2 colunas acima. **B**
+
 | Ação | Resposta | Origem |
 |---|---|---|
-| Desligar o toggle "Zona ativa" | Card com borda tracejada e fundo preto; nome e valor em cinza; slider `disabled` em cinza; aparece "Volume bloqueado: ative a zona para ajustar." (associada ao slider por `aria-describedby`); rodapé "Zona desabilitada" | B |
-| Religar | O slider volta a funcionar **com o volume anterior preservado** | B (preservação: H) |
+| Toggle | "Habilitada" / "Desabilitada"; card acinzentado quando desabilitada. Se alguma zona ainda usa a Source: "· ainda selecionada em N zonas" | B (aviso: H) |
+| Ícone editar | Campo inline com o nome atual, contador "n/20", **Cancelar** e **Salvar** | B |
+| Nome vazio (ou só espaços) | Salvar desabilitado e aviso "O nome não pode ficar vazio." | B |
+| Enter / Salvar | Salva o nome sem espaços nas pontas; atualiza na hora os selects da aba Zona | B |
+| Esc / Cancelar | Descarta a edição; o foco volta ao ícone editar | H |
+| Limite | 20 caracteres (`SOURCE_NAME_MAX`, configurável) | H |
+| Accordion → Ganho | Slider bipolar −10…+10 sem unidade (demonstrativo); valor "+2", "0", "−3" | B (escala: H) |
 
-O toggle fica no rodapé do card, menor e com menos peso visual que o slider, para não competir com a ação principal. **H**
-
-### 3.3 Equalização
-| Controle | Faixa (demonstrativa) | Inicial | Exibição | Origem |
-|---|---|---|---|---|
-| Grave | −10 a +10, passo 1 | 0 | "+4 dB", "0 dB", "−3 dB" | B (faixa/unidade: H) |
-| Médio | idem | 0 | idem | idem |
-| Agudo | idem | 0 | idem | idem |
-| Balanço | −10 (E) a +10 (D) | 0 | "E 2", "Centro", "D 3"; escala Esquerda / Centro / Direita | B (faixa: H) |
-
-- Sliders bipolares: o preenchimento amarelo vai do centro (marca branca) até o valor.
-- O valor fica amarelo quando sai do neutro e cinza no neutro.
-- **Restaurar padrão** volta tudo a 0; fica desabilitado quando já está no neutro. **H**
-- A equalização é **do equipamento** (todas as zonas). O texto do painel explica isso. **B**
-- Nota fixa: "Faixas de ajuste demonstrativas — ainda não são as especificações do equipamento."
-
-## 4. Responsividade
-| Largura | Descoberta | Grade de zonas |
+## 5. Configurações
+| Item | Comportamento | Origem |
 |---|---|---|
-| < 600 px | Uma coluna: *Meus equipamentos* acima de *Encontrados na rede*; margem lateral 31 px (16 px abaixo de 380 px) | 1 coluna |
-| 600–1023 px | Uma coluna | 2 colunas |
-| ≥ 960 px | Duas colunas: rede à esquerda, adicionados à direita | — |
-| ≥ 1024 px | — | SMA6 em 3 colunas (2×3); SMA4 em 2 colunas (2×2, máx. 840 px) |
+| Grupos | Funcional (§5.1) | B |
+| Configurações de rede | Linha esmaecida "Em breve", sem link, tela ou fluxo | B |
+| Informações do dispositivo | Idem | B |
 
-Conteúdo limitado a 1120 px e centralizado no desktop. Não há escala proporcional da interface.
+### 5.1 Grupos
+| Ação | Resposta | Origem |
+|---|---|---|
+| **Adicionar grupo** | Cria um rascunho "Grupo N · NOVO" (borda tracejada amarela) com um checkbox por zona (1…4 ou 1…6) | B |
+| Marcar < 2 zonas no rascunho | **Salvar grupo** desabilitado; aviso "Selecione pelo menos 2 zonas…" | B |
+| Salvar | O grupo passa a valer; checkboxes dessa zona ficam bloqueados nos outros grupos | B |
+| Cancelar | Descarta o rascunho | H |
+| Zona de outro grupo | Checkbox bloqueado (opacidade 0,4) com o motivo "NO GRUPO X" | B |
+| Desmarcar num grupo salvo com 2 zonas | Bloqueado, motivo "MÍNIMO 2"; texto do card explica que é preciso excluir o grupo | B |
+| Marcar zona livre num grupo salvo | Permitido | H |
+| **Excluir grupo** | Remove o grupo, libera as zonas e renumera os grupos seguintes | B (renumerar: H) |
+| Limite atingido (SMA4 = 2, SMA6 = 3) | Botão desabilitado e "Limite de N grupos do MODELO atingido." | B |
+| Menos de 2 zonas livres | Botão desabilitado e "Não há zonas livres suficientes…" | H |
 
-## 5. Feedback e estados
-- Hover / active em botões, abas, cards e toggles; thumb do slider cresce no hover e no arraste.
-- `:focus-visible` com anel amarelo de 2 px em todos os controles.
-- Em telas de toque (`pointer: coarse`), o thumb passa a 20 px; slider e toggle têm área de toque maior que o desenho.
-- Loading: lupa animada + shimmer. Animações respeitam `prefers-reduced-motion`.
+Um rascunho por vez. Grupos de 1 coluna < 600 px, 2 até 1023 px e 3 acima.
 
-## 6. Persistência
-Estado em memória (`AppStateProvider`): equipamentos adicionados, volumes, zonas habilitadas e EQ **se mantêm ao navegar** entre as telas durante a sessão. Recarregar a página reinicia tudo (H; não há armazenamento local).
+## 6. Feedback, acessibilidade e responsividade
+- Hover/active em botões, ícones, cards, toggles e selects; `:focus-visible` com anel amarelo de 2 px.
+- Botões de ícone com área de 44 px e `aria-label`; favorito e mute com `aria-pressed`.
+- Checkbox nativo com o desenho do Figma; motivo do bloqueio por `aria-describedby`.
+- Anúncios em `aria-live` ao adicionar equipamento, criar e excluir grupo.
+- Toque (`pointer: coarse`): thumb do slider de 20 px. Animações respeitam `prefers-reduced-motion`.
+- Conteúdo limitado a 1120 px no desktop; sem escala proporcional da interface.

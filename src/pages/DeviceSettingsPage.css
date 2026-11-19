@@ -1,0 +1,85 @@
+.settings {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-32);
+}
+
+.settings__section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-12);
+}
+
+.settings__summary {
+  font-size: var(--tamanho-5xs);
+  font-weight: var(--peso-bold);
+  color: var(--cinza-50);
+  text-transform: uppercase;
+}
+
+.settings__intro,
+.settings__empty {
+  font-size: var(--tamanho-3);
+  color: var(--texto-secundario);
+}
+
+/* Grupos: 1 coluna → 2 (tablet) → 3 (desktop). */
+.settings__groups {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--espaco-12);
+  align-items: start;
+}
+
+@media (min-width: 600px) {
+  .settings__groups {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .settings__groups {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.settings__add {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espaco-8) var(--espaco-16);
+}
+
+.settings__add-hint {
+  flex: 1 1 220px;
+  font-size: var(--tamanho-2xs);
+  color: var(--texto-secundario);
+}
+
+/* Baseado em app/item-de-lista/configurações (tipo=link), aqui sempre desabilitado. */
+.settings__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.settings__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-12);
+  min-height: var(--altura-campo);
+  border-bottom: 1px solid var(--borda-card);
+  font-size: var(--tamanho-m);
+  color: var(--cinza-0);
+  opacity: var(--opacidade-bloqueado);
+}
+
+.settings__soon {
+  font-size: var(--tamanho-5xs);
+  font-weight: var(--peso-bold);
+  color: var(--cinza-50);
+  text-transform: uppercase;
+}

@@ -1,0 +1,44 @@
+.accordion {
+  display: flex;
+  flex-direction: column;
+}
+
+.accordion__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-16); /* [figma-raw] gap título ↔ ícone */
+  width: 100%;
+  min-height: var(--area-icone);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.accordion__title {
+  font-size: var(--tamanho-m);
+  font-weight: var(--peso-semibold);
+  color: var(--cinza-0);
+}
+
+.accordion__chevron {
+  flex-shrink: 0;
+  width: var(--icone-acordeao);
+  height: var(--icone-acordeao);
+  transition: transform var(--transicao);
+}
+
+/* O Figma tem o chevron aberto=true como o mesmo traço invertido. */
+.accordion--open .accordion__chevron {
+  transform: rotate(180deg);
+}
+
+.accordion__trigger:hover .accordion__title {
+  color: var(--destaque-principal);
+}
+
+.accordion__content {
+  padding: var(--espaco-8) 0 var(--espaco-4);
+}

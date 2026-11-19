@@ -10,16 +10,19 @@ interface DiscoveredCardProps {
   onAdd: () => void;
 }
 
-/** Baseado em app_item_dispositivo_encontrado (Embrace Power): imagem 64px, nome, MAC e botão médio. */
+/** Baseado em app_item_dispositivo_encontrado (Embrace Power): imagem 64px, nome, MAC, IP, zonas e botão médio. */
 export function DiscoveredEquipmentCard({ device, isAdded, onAdd }: DiscoveredCardProps) {
   return (
-    <article className="equipment-card" aria-label={`${device.model}, MAC ${device.mac}`}>
+    <article className="equipment-card" aria-label={`${device.model}, MAC ${device.mac}, IP ${device.ip}`}>
       <div className="equipment-card__info">
         <DeviceThumb model={device.model} />
         <div className="equipment-card__text">
           <h3 className="equipment-card__name">{device.model}</h3>
           <p className="equipment-card__meta">
             <span>MAC:</span> <span className="equipment-card__mac">{device.mac}</span>
+          </p>
+          <p className="equipment-card__meta">
+            <span>IP:</span> <span className="equipment-card__mac">{device.ip}</span>
           </p>
           <p className="equipment-card__meta">{MODEL_ZONES[device.model]} zonas de áudio</p>
         </div>
@@ -60,6 +63,9 @@ export function AddedEquipmentCard({ device, activeZones, totalZones, onOpen, hi
           <span className="equipment-card__name">{device.model}</span>
           <span className="equipment-card__meta">
             MAC: <span className="equipment-card__mac">{device.mac}</span>
+          </span>
+          <span className="equipment-card__meta">
+            IP: <span className="equipment-card__mac">{device.ip}</span>
           </span>
           <span className="equipment-card__meta">
             {activeZones} de {totalZones} zonas ativas

@@ -1,12 +1,12 @@
 .zone-card {
   display: flex;
   flex-direction: column;
-  gap: var(--espaco-8);
-  padding: var(--espaco-16) var(--espaco-16) var(--espaco-12);
+  gap: var(--espaco-12);
+  padding: var(--espaco-12) var(--espaco-16);
   border: 1px solid var(--borda-card);
   border-radius: var(--raio-card);
   background: var(--superficie-card);
-  transition: opacity var(--transicao), border-color var(--transicao);
+  transition: background-color var(--transicao), border-color var(--transicao);
 }
 
 .zone-card:focus-within {
@@ -15,9 +15,8 @@
 
 .zone-card__header {
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--espaco-12);
+  align-items: center;
+  gap: var(--espaco-4);
 }
 
 .zone-card__name {
@@ -26,7 +25,12 @@
   color: var(--cinza-0);
 }
 
+.zone-card__favorite {
+  margin-left: -6px;
+}
+
 .zone-card__value {
+  margin-left: auto;
   font-size: var(--tamanho-titulo);
   font-weight: var(--peso-semibold);
   font-variant-numeric: tabular-nums;
@@ -44,12 +48,32 @@
 .zone-card__volume {
   display: flex;
   align-items: center;
-  gap: 11px; /* [figma-raw] app/controle/volume */
+  gap: var(--espaco-4); /* slider + botão de 44px: o ícone de 19px fica a ~11px do trilho, como em app/controle/volume */
 }
 
-.zone-card__speaker {
-  flex-shrink: 0;
-  transition: opacity var(--transicao);
+.zone-card__mute {
+  margin-right: -12px;
+}
+
+.zone-card__advanced {
+  padding-top: var(--espaco-4);
+  border-top: 1px solid var(--borda-card);
+}
+
+.zone-card__advanced-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-16);
+}
+
+.zone-card__setting {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-12);
+  padding-top: var(--espaco-12);
+  border-top: 1px solid var(--borda-card);
+  font-size: var(--tamanho-3);
 }
 
 .zone-card__footer {
@@ -70,24 +94,41 @@
   color: var(--cinza-0);
 }
 
-.zone-card__hint {
-  margin-top: -2px;
+.zone-card__hint,
+.zone-card__warning {
   font-size: var(--tamanho-2xs);
   color: var(--cinza-0);
 }
 
-/* Zona desabilitada: conteúdo de volume esmaecido, rodapé continua legível. */
+.zone-card__warning {
+  margin-top: calc(var(--espaco-4) * -1);
+  color: var(--destaque-principal);
+}
+
+/* Mute: o slider mantém o volume configurado, só esmaecido. */
+.zone-card--muted .zone-card__volume .slider {
+  opacity: var(--opacidade-mudo);
+}
+
+.zone-card--muted .zone-card__value {
+  font-size: var(--tamanho-m);
+  color: var(--texto-secundario);
+}
+
+/* Zona desabilitada (decisão confirmada): card acinzentado, volume 0 % e ícone mudo. */
+.zone-card--disabled {
+  background: var(--superficie-card-desabilitada);
+  border-color: var(--aba-ativa);
+}
+
 .zone-card--disabled .zone-card__name,
-.zone-card--disabled .zone-card__value {
+.zone-card--disabled .zone-card__value,
+.zone-card--disabled .zone-card__unit {
   color: var(--cinza-250);
 }
 
-.zone-card--disabled .zone-card__speaker {
-  opacity: 0.3;
-}
-
-.zone-card--disabled {
-  background: var(--cinza-1000);
-  border-style: dashed;
+.zone-card--disabled .zone-card__advanced,
+.zone-card--disabled .zone-card__setting,
+.zone-card--disabled .zone-card__footer {
   border-color: var(--aba-ativa);
 }

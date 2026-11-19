@@ -1,0 +1,73 @@
+.group-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-8);
+  padding: var(--espaco-12) var(--espaco-16) var(--espaco-16);
+  border: 1px solid var(--borda-card);
+  border-radius: var(--raio-card);
+  background: var(--superficie-card);
+}
+
+.group-card--draft {
+  border-style: dashed;
+  border-color: var(--destaque-principal);
+}
+
+.group-card__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--espaco-12);
+}
+
+.group-card__name {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-8);
+  font-size: var(--tamanho-m);
+  font-weight: var(--peso-semibold);
+}
+
+.group-card__badge {
+  padding: 2px 6px;
+  border-radius: var(--raio-botao);
+  background: var(--destaque-principal);
+  color: var(--cinza-1000);
+  font-size: var(--tamanho-5xs);
+  font-weight: var(--peso-bold);
+  text-transform: uppercase;
+}
+
+.group-card__count {
+  font-size: var(--tamanho-5xs);
+  font-weight: var(--peso-bold);
+  color: var(--cinza-50);
+  text-transform: uppercase;
+}
+
+/* Checkboxes numerados, com quebra de linha em telas estreitas. */
+.group-card__zones {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
+  gap: 0 var(--espaco-12);
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.group-card__rule {
+  font-size: var(--tamanho-2xs);
+  color: var(--texto-secundario);
+}
+
+.group-card__rule--alert {
+  color: var(--destaque-principal);
+}
+
+.group-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--espaco-8);
+  margin-top: var(--espaco-4);
+}

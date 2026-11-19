@@ -5,7 +5,15 @@ import { Slider } from './Slider';
 import './EqualizerPanel.css';
 
 interface EqualizerPanelProps {
+  /** Prefixo dos ids (único por zona), ex.: "zona-3". */
+  idPrefix: string;
+  /** Contexto para os rótulos acessíveis, ex.: "Zona 3" → "Grave da Zona 3". */
+  context: string;
   equalizer: EqualizerState;
+  /** Zona desabilitada: controles bloqueados, valores preservados. */
+  disabled?: boolean;
+  /** Id do aviso que explica o bloqueio. */
+  describedBy?: string;
   onChange: (band: EqualizerBand, value: number) => void;
   onReset: () => void;
 }
@@ -27,18 +35,26 @@ function spokenValue(cfg: EqBandConfig, value: number): string {
   return `${value} ${cfg.unit === 'dB' ? 'decibéis' : ''}`.trim();
 }
 
-/** Equalização do dispositivo (não por zona, conforme o briefing). */
-export function EqualizerPanel({ equalizer, onChange, onReset }: EqualizerPanelProps) {
+const PROVISIONAL_LABELS = EQ_BANDS.filter((cfg) => cfg.provisional).map((cfg) => cfg.label.toLowerCase());
+
+/** Equalização de uma zona (grave, médio, agudo e balanço), usada dentro do accordion do card. */
+export function EqualizerPanel({
+  idPrefix,
+  context,
+  equalizer,
+  disabled = false,
+  describedBy,
+  onChange,
+  onReset,
+}: EqualizerPanelProps) {
   const isNeutral = EQ_BANDS.every((cfg) => equalizer[cfg.band] === cfg.neutral);
 
   return (
     <div className="eq-panel">
-      <p className="eq-panel__intro">Ajuste aplicado a todas as zonas deste equipamento.</p>
-
       <ul className="eq-panel__list">
         {EQ_BANDS.map((cfg) => {
           const value = equalizer[cfg.band];
-          const id = `eq-${cfg.band}`;
+          const id = `${idPrefix}-eq-${cfg.band}`;
           const isBalance = cfg.band === 'balance';
           return (
             <li key={cfg.band} className={`eq-panel__band${isBalance ? ' eq-panel__band--balance' : ''}`}>
@@ -46,7 +62,10 @@ export function EqualizerPanel({ equalizer, onChange, onReset }: EqualizerPanelP
                 <label htmlFor={id} className="eq-panel__label">
                   {cfg.label}
                 </label>
-                <output htmlFor={id} className={`eq-panel__value${value === cfg.neutral ? ' eq-panel__value--neutral' : ''}`}>
+                <output
+                  htmlFor={id}
+                  className={`eq-panel__value${value === cfg.neutral || disabled ? ' eq-panel__value--neutral' : ''}`}
+                >
                   {formatValue(cfg, value)}
                 </output>
               </div>
@@ -58,8 +77,10 @@ export function EqualizerPanel({ equalizer, onChange, onReset }: EqualizerPanelP
                 max={cfg.max}
                 step={cfg.step}
                 onChange={(v) => onChange(cfg.band, v)}
-                label={cfg.label}
+                label={`${cfg.label} da ${context}`}
                 valueText={spokenValue(cfg, value)}
+                disabled={disabled}
+                describedBy={disabled ? describedBy : undefined}
               />
               <div className="eq-panel__scale" aria-hidden="true">
                 {isBalance ? (
@@ -70,7 +91,7 @@ export function EqualizerPanel({ equalizer, onChange, onReset }: EqualizerPanelP
                   </>
                 ) : (
                   <>
-                    <span>{cfg.min}</span>
+                    <span>−{Math.abs(cfg.min)}</span>
                     <span>0</span>
                     <span>+{cfg.max}</span>
                   </>
@@ -82,10 +103,12 @@ export function EqualizerPanel({ equalizer, onChange, onReset }: EqualizerPanelP
       </ul>
 
       <div className="eq-panel__footer">
-        <Button onClick={onReset} disabled={isNeutral}>
+        <Button onClick={onReset} disabled={isNeutral || disabled} aria-label={`Restaurar equalização padrão da ${context}`}>
           Restaurar padrão
         </Button>
-        <p className="eq-panel__note">Faixas de ajuste demonstrativas — ainda não são as especificações do equipamento.</p>
+        {PROVISIONAL_LABELS.length > 0 && (
+          <p className="eq-panel__note">Faixa de {PROVISIONAL_LABELS.join(' e ')} demonstrativa.</p>
+        )}
       </div>
     </div>
   );

@@ -11,24 +11,28 @@ Protótipo web navegável do **Scenario Audio**, app da Scenario Automation para
 ## Estrutura
 ```
 src/
-  config/audioLimits.ts   zonas por modelo, limites DEMONSTRATIVOS de volume/EQ, tempos da varredura
-  data/mockDevices.ts     equipamentos fictícios (MACs 02:DE:40:…) e criação das zonas
-  state/AppState.tsx      useReducer + Context: varredura, adicionados, zonas, EQ, tela aberta
-  types/index.ts          DeviceModel, ZoneState, EqualizerState, AddedDevice…
+  config/audioLimits.ts   zonas e limite de grupos por modelo, faixas de volume/EQ/ganho, limite de nome, tempos
+  data/mockDevices.ts     equipamentos (MAC 02:DE:40:…, IP 192.0.2.x) e Sources fictícios; criação de zonas
+  state/AppState.tsx      reducer + Context: varredura, navegação, zonas, Sources, grupos (aplica as regras)
+  state/selectors.ts      effectiveVolume, sortZonesForDisplay, selectableSources
+  state/groupRules.ts     regras puras de grupos (limite, mínimo 2, exclusividade)
+  types/index.ts          DeviceModel, ZoneState, SourceState, ZoneGroup, AddedDevice…
   components/             um componente por arquivo, com o .css ao lado
-  pages/                  DiscoveryPage, DeviceControlPage
+  pages/                  DiscoveryPage, DeviceControlPage (abas Zona | Source), DeviceSettingsPage
   styles/tokens.css       TODOS os tokens visuais (cores, tipografia, medidas), com origem anotada
   styles/global.css       reset, foco, layout de página
   assets/                 SVGs exportados do Figma
-docs/                     product-brief, interactions, design-system, decisions, qa-checklist
+docs/                     product-brief, interactions, data-model, design-system, decisions, qa-checklist
 ```
 
 ## Regras de código
-- A quantidade de zonas vem de `MODEL_ZONES[model]`. Nunca crie lógica específica para SMA4 ou SMA6.
+- Zonas e limite de grupos vêm de `MODEL_ZONES` / `MODEL_GROUP_LIMIT`. Nunca crie lógica específica para SMA4 ou SMA6.
 - Dados de demonstração ficam em `src/data/`, limites em `src/config/`. Nenhum dos dois vai para componentes.
 - Todo estado de controle passa pelo reducer de `AppState.tsx`; componentes visuais recebem props.
-- A equalização é **por dispositivo** (`AddedDevice.equalizer`). Se virar por zona, mova-a para `ZoneState`.
-- Controles acessíveis: `input type="range"` nativo, `role="switch"` no toggle, abas WAI-ARIA, `:focus-visible`.
+- EQ e *Memorizar último volume* são **por zona**, no accordion do card.
+- `ZoneState.volume` é sempre o último volume definido; mute e zona desabilitada não o alteram (`effectiveVolume()` deriva o 0). Zona desabilitada bloqueia Source, volume, mute e avançados no reducer.
+- Regras de grupos só em `state/groupRules.ts`, usadas pelo reducer e pela interface. Desabilitar Source não altera as zonas que a usam.
+- Controles acessíveis: range/checkbox/select nativos, `role="switch"` no toggle, abas WAI-ARIA, `aria-pressed` em favorito/mute, `aria-expanded` no accordion, `:focus-visible`.
 - CSS: use apenas `var(--token)` de `tokens.css`. Valor novo → crie um token com a origem anotada (`[figma]`, `[figma-raw]`, `[adaptado]`, `[provisório]`).
 
 ## Design System (Embrace Power)
@@ -39,9 +43,10 @@ docs/                     product-brief, interactions, design-system, decisions,
 
 ## Restrições desta fase
 - **Não** implementar comunicação real com hardware, Wi-Fi, Bluetooth, rede local, protocolos, backend, banco de dados, APIs, autenticação ou firmware.
-- **Não** tratar limites de EQ e balanço como especificação oficial (ver `docs/decisions.md`).
+- Grave/médio/agudo (−7 a +7 dB) são **confirmados**; balanço e ganho **não** são especificação oficial (ver `docs/decisions.md`).
+- Configurações de rede e Informações do dispositivo: só a linha "Em breve", sem tela ou fluxo.
 - Não antecipar funcionalidades fora do briefing (`docs/product-brief.md`).
 
 ## Antes de alterar algo relevante
-1. Leia `docs/interactions.md` (comportamento) e `docs/decisions.md` (hipóteses abertas).
+1. Leia `docs/interactions.md` (comportamento), `docs/data-model.md` (dados e regras) e `docs/decisions.md` (hipóteses abertas).
 2. Depois da mudança, atualize o doc afetado e o `docs/qa-checklist.md`. Marque itens só depois de testá-los de verdade.

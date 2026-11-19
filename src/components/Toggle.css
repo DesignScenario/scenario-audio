@@ -38,14 +38,19 @@
   background: var(--cinza-1000);
 }
 
-.toggle:hover:not(.toggle--on) {
+.toggle:hover:not(.toggle--on):not(:disabled) {
   background: #454545;
 }
 
-.toggle:active .toggle__knob {
+.toggle:disabled {
+  cursor: not-allowed;
+  opacity: var(--opacidade-bloqueado);
+}
+
+.toggle:active:not(:disabled) .toggle__knob {
   width: 23px;
 }
 
-.toggle--on:active .toggle__knob {
+.toggle--on:active:not(:disabled) .toggle__knob {
   transform: translateX(11px);
 }

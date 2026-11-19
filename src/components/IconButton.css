@@ -1,0 +1,26 @@
+.icon-btn {
+  display: inline-grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: var(--area-icone);
+  height: var(--area-icone);
+  padding: 0;
+  border: 0;
+  border-radius: var(--raio-botao);
+  background: transparent;
+  cursor: pointer;
+  transition: background-color var(--transicao), opacity var(--transicao);
+}
+
+.icon-btn:hover:not(:disabled) {
+  background: var(--aba-inativa);
+}
+
+.icon-btn:active:not(:disabled) {
+  background: var(--aba-ativa);
+}
+
+.icon-btn:disabled {
+  cursor: not-allowed;
+  opacity: var(--opacidade-bloqueado);
+}

@@ -24,6 +24,10 @@
 
   --superficie-card: #141414;   /* [provisório] fundo dos cards de zona — o Figma não define superfície de card no tema escuro */
   --borda-card: #262626;        /* [adaptado] reaproveita semântica/keypads/secundária/cinza como borda sutil */
+  --superficie-card-desabilitada: #262626; /* [adaptado] zona desabilitada "acinzentada": reaproveita semântica/keypads/secundária/cinza */
+  --superficie-campo: #1f1f1f;  /* [figma-raw] fundo de app/item-de-lista/menu-suspenso (select de Source, campo de nome) */
+  --opacidade-bloqueado: 0.4;   /* [figma-raw] app/item-de-lista/caixa-de-seleção-5, bloqueado=True */
+  --opacidade-mudo: 0.45;       /* [provisório] slider de volume esmaecido enquanto a zona está mutada */
   --erro: #ff6b6b;              /* [provisório] não usado em fluxos principais */
 
   /* ---------- Tipografia ---------- */
@@ -54,6 +58,10 @@
   --altura-botao-grande: 50px;  /* [figma-raw] app/botão/grande-principal */
   --altura-aba: 40px;           /* [figma-raw] app/botão/aba-keypad */
   --thumb-dispositivo: 64px;    /* [figma-raw] imagem no item de dispositivo encontrado */
+  --altura-campo: 46px;         /* [figma-raw] app/item-de-lista/menu-suspenso */
+  --area-icone: 44px;           /* [adaptado] área de toque dos botões de ícone (mesma do voltar da barra de título) */
+  --icone-acordeao: 24px;       /* [figma-raw] app/ícone/menu-suspenso-24px */
+  --caixa-selecao: 20px;        /* [figma-raw] app/ícone/caixa-de-seleção-cheia-20px */
 
   --raio-botao: 4px;            /* [figma-raw] botões e abas */
   --raio-imagem: 6px;           /* [figma-raw] imagem de dispositivo */
